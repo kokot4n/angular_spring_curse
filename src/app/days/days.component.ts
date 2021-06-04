@@ -38,10 +38,9 @@ export class DaysComponent implements OnInit {
   }
 
   send(){
-    this.rows = [];
-    
     this.getWeather().subscribe((weather: any) => {
       this.getNotes().subscribe((notes: any) => {
+        this.rows = [];
         this.notes = notes;
         weather = weather.daily;
       for (let i = 0; i < weather.length; i++) {
