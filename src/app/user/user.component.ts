@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -8,26 +8,45 @@ import { Observable } from 'rxjs';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-
-  date = new Date("2021-01-01").toISOString().substr(0, 22);
+  today = new Date();
+  date = {
+    "year": this.today.getFullYear(),
+    "month": this.today.getMonth()+1,
+    "day": this.today.getDate()
+  }
   text = "";
   note = {
     "text": this.text,
     "date": this.date
   }
+  @Output() logOutEvent = new EventEmitter<boolean>();
+
+  logout(){
+    this.httpClient.get("http://localhost:8080/logout", {withCredentials: true, }).subscribe((answer: any) =>{
+      console.log(+answer);
+      this.logOutEvent.emit();
+    }, err => {
+      this.logOutEvent.emit();
+    });
+  }
 
   newNote(){
-    this.getNotes().subscribe((notes: any) => {
-      console.log(notes);
+    this.postNotes().subscribe((notes: any) => {
+      alert("Новая заметка создана удачно. Обновние таблицу.");
     }, err => {
-      alert("error");
+      alert("user notes");
     }
     );
   }
 
-  getNotes(): Observable<any>{
-    let url = new URL('https://spring-curse-job.herokuapp.com/user/note');
-    let post = this.httpClient.post(url.toString(), {"text": this.text, "date": this.date});
+  postNotes(): Observable<any>{
+    var dateString = this.date.year + '-';
+    dateString += (this.date.month.toString().length<2) ? '0' : '';
+    dateString += this.date.month + '-';
+    dateString += (this.date.day.toString().length<2) ? '0' : '';
+    dateString += this.date.day;
+    let url = new URL('http://localhost:8080/user/note');
+    let post = this.httpClient.post(url.toString(), {"text": this.text, "date": dateString}, {withCredentials: true, });
     console.log(post);
     
     return post;

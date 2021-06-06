@@ -8,19 +8,23 @@ import { DaysComponent } from './days/days.component';
 import { UserComponent } from './user/user.component';
 import { FormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { LoginComponent } from './login/login.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     DaysComponent,
-    UserComponent
+    UserComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('../node_modules/bootstrap/dist/css/bootstrap.min.css');
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+.datatable-row-detail {
+    overflow-y: scroll !important;
+ }

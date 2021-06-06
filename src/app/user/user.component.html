@@ -1,3 +1,7 @@
-<input type="datetime-local" name="" id="datetime" [(ngModel)]='date'>
+<div id="header"><input id="dateOfNote" class="form-control" name="dp" ngbDatepicker #dp="ngbDatepicker" (click)="dp.toggle()" autocomplete="off" readonly="readonly" [(ngModel)]='date'>
+<button (click)="logout()">Log out</button>
+</div>
+<label for="text">Введите текст заметки: </label>
 <input type="text" name="" id="text" [(ngModel)]='text'>
+<br>
 <button (click)="newNote()">Новая заметка!</button>

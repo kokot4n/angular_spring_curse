@@ -1,2 +1,4 @@
-<app-days></app-days>
-<app-user></app-user>
+<app-login (logInEvent)="login($event)" *ngIf="!isLoggedIn"></app-login>
+<app-user *ngIf="isLoggedIn" (logOutEvent)="logout()"></app-user>
+<br>
+<app-days *ngIf="isLoggedIn"></app-days>

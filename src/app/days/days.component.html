@@ -1,2 +1,57 @@
+<ngx-datatable
+        #myTable
+        class="bootstrap expandable"
+        style="height: 600px; overflow-y:visible"
+        [rows]="rows"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        rowHeight="auto">
+      >
+        <!-- Row Detail Template -->
+        <ngx-datatable-row-detail [rowHeight]="100"  #myDetailRow>
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div style="padding-left:35px;">
+              <div><strong>Заметки</strong></div>
+              <li *ngFor="let note of row.note; index as i;">{{ note }}</li>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+        <!-- Column Templates -->
+        <ngx-datatable-column
+          [width]="50"
+          [resizeable]="false"
+          [sortable]="false"
+          [draggable]="false"
+          [canAutoResize]="false"
+        >
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <a
+              href="javascript:void(0)"
+              [class.datatable-icon-right]="!expanded"
+              [class.datatable-icon-down]="expanded"
+              title="Expand/Collapse Row"
+              (click)="toggleExpandRow(row)"
+            >
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="День" prop="day" [width]="100">
+          <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+            <strong>{{ row.day }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Давление(сПа)" prop="pressure" [width]="150">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <strong>{{ row.pressure }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Температура(℃)" [width]="200">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <strong>{{ row.temperature }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+
+
+
 <button (click)="send()">Обновить</button>
-<ngx-datatable [rows]="rows" [columns]="columns"> </ngx-datatable>

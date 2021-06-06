@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -16,24 +16,25 @@ export class DaysComponent implements OnInit {
   lng = 0;
 
   rows: any[] = [];
-  columns = [{ prop: 'day' }, { name: 'temperature' }, { name: 'pressure' }, {name:'note'}];
   notes: any[] = [];
+
+  @ViewChild('myTable') table: any;
 
   getWeather(): Observable<any>{
     return this.httpClient.get<any>(
-      'https://spring-curse-job.herokuapp.com/user/weather?lat='+this.lat+'&lon='+this.lng
+      'http://localhost:8080/user/weather?lat='+this.lat+'&lon='+this.lng, {withCredentials: true}
     );
   }
 
   getNotes(): Observable<any>{
-    let url = new URL('https://spring-curse-job.herokuapp.com/user/note');
+    this.getUserLocation();
+    let url = new URL('http://localhost:8080/user/note');
     return this.httpClient.get<any>(
-      url.toString()
+      url.toString(), {withCredentials: true}
     );
   }
 
   ngOnInit(): void {
-    this.send();
     this.getUserLocation();
   }
 
@@ -42,25 +43,27 @@ export class DaysComponent implements OnInit {
       this.getNotes().subscribe((notes: any) => {
         this.rows = [];
         this.notes = notes;
-        weather = weather.daily;
+        weather = JSON.parse(weather.body).daily;
       for (let i = 0; i < weather.length; i++) {
         this.rows.push({day: new Date(weather[i].dt * 1000).toLocaleDateString(), temperature: weather[i].temp.eve, pressure: weather[i].pressure});
+        this.rows[i].note = [];
       }
       for (let i = 0; i < notes.length; i++) {
         for (let j = 0; j < weather.length; j++) {
           if(new Date(this.notes[i].date).getDate() == new Date(weather[j].dt * 1000).getDate()){
-            this.rows[j].note = this.notes[i].text;
+            this.rows[j].note.push(this.notes[i].text);
           }
         }
         
       }
       this.rows = [...this.rows];
+      
       }, err => {
-        alert("error");
+        alert("notes");
       }
       );
     }, err => {
-      alert("error");
+      alert("weather");
     }
     );
   }
@@ -71,10 +74,17 @@ export class DaysComponent implements OnInit {
          this.lat = position.coords.latitude;
          this.lng = position.coords.longitude;
        });
+       this.send();
     }else {
       console.log("User not allow")
 
     }
+  }
+
+  toggleExpandRow(row: any) {
+    this.table.rowDetail.toggleExpandRow(row);
+    console.log(row);
+    
   }
 
  

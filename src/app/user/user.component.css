@@ -1,0 +1,7 @@
+#dateOfNote{
+    width: 20%;
+}
+#header{
+    display: flex;
+    justify-content: space-between;
+}

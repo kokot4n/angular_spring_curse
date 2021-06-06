@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
+  isLoggedIn = false;
+  login(l: boolean){
+    this.isLoggedIn = l;
+  }
+  logout(){
+    this.isLoggedIn = false;
+  }
 }
