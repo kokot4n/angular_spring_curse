@@ -35,7 +35,7 @@ export class DaysComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserLocation();
-    this.getUserLocation();
+    this.send();
   }
 
   send(){
