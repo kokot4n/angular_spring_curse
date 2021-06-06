@@ -34,11 +34,11 @@ export class DaysComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserLocation();
     this.send();
   }
 
   send(){
+    this.getUserLocation();
     this.getWeather().subscribe((weather: any) => {
       this.getNotes().subscribe((notes: any) => {
         this.rows = [];
