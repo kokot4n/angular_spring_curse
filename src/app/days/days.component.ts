@@ -22,19 +22,19 @@ export class DaysComponent implements OnInit {
 
   getWeather(): Observable<any>{
     return this.httpClient.get<any>(
-      'http://localhost:8080/user/weather?lat='+this.lat+'&lon='+this.lng, {withCredentials: true}
+      'https://spring-curse-job.herokuapp.com/user/weather?lat='+this.lat+'&lon='+this.lng, {withCredentials: true}
     );
   }
 
   getNotes(): Observable<any>{
-    this.getUserLocation();
-    let url = new URL('http://localhost:8080/user/note');
+    let url = new URL('https://spring-curse-job.herokuapp.com/user/note');
     return this.httpClient.get<any>(
       url.toString(), {withCredentials: true}
     );
   }
 
   ngOnInit(): void {
+    this.getUserLocation();
     this.getUserLocation();
   }
 
@@ -74,7 +74,6 @@ export class DaysComponent implements OnInit {
          this.lat = position.coords.latitude;
          this.lng = position.coords.longitude;
        });
-       this.send();
     }else {
       console.log("User not allow")
 

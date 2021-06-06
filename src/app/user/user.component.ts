@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   @Output() logOutEvent = new EventEmitter<boolean>();
 
   logout(){
-    this.httpClient.get("http://localhost:8080/logout", {withCredentials: true, }).subscribe((answer: any) =>{
+    this.httpClient.get("https://spring-curse-job.herokuapp.com/logout", {withCredentials: true, }).subscribe((answer: any) =>{
       console.log(+answer);
       this.logOutEvent.emit();
     }, err => {
@@ -45,7 +45,7 @@ export class UserComponent implements OnInit {
     dateString += this.date.month + '-';
     dateString += (this.date.day.toString().length<2) ? '0' : '';
     dateString += this.date.day;
-    let url = new URL('http://localhost:8080/user/note');
+    let url = new URL('https://spring-curse-job.herokuapp.com/user/note');
     let post = this.httpClient.post(url.toString(), {"text": this.text, "date": dateString}, {withCredentials: true, });
     console.log(post);
     

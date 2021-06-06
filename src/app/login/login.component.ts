@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     var formData = new FormData();
     formData.append("username",this.username);
     formData.append("password", this.password);
-    this.httpClient.post("http://localhost:8080/login",formData, {withCredentials: true}).subscribe((notes: any) => {
+    this.httpClient.post("https://spring-curse-job.herokuapp.com/login",formData, {withCredentials: true}).subscribe((notes: any) => {
       this.isLoggedIn = true;
       this.logInEvent.emit(this.isLoggedIn);
     }, err => {
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   reg(){
-    this.httpClient.post("http://localhost:8080/user", 
+    this.httpClient.post("https://spring-curse-job.herokuapp.com/user", 
     {"login": this.username, "password": this.password, "roles": "ADMIN"}, 
     {withCredentials: true}).subscribe((user: any) => {
       if(user.roles == "USER"){
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.httpClient.get("http://localhost:8080/user", {withCredentials: true}).subscribe((user: any) => {
+    this.httpClient.get("https://spring-curse-job.herokuapp.com/user", {withCredentials: true}).subscribe((user: any) => {
       console.log(user);
       this.username = user.login;
       this.password = user.password;
