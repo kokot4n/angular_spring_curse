@@ -34,7 +34,7 @@ export class DaysComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.send();
+    this.getUserLocation();
   }
 
   send(){
@@ -73,6 +73,7 @@ export class DaysComponent implements OnInit {
      navigator.geolocation.getCurrentPosition(position => {
          this.lat = position.coords.latitude;
          this.lng = position.coords.longitude;
+         this.send();
        });
     }else {
       console.log("User not allow")
